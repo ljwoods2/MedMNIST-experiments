@@ -53,10 +53,10 @@ def main(data_flag, output_root, num_epochs, gpu_ids, batch_size, size, conv, pr
     train_transform = Transform3D(mul='random') if shape_transform else Transform3D()
     eval_transform = Transform3D(mul='0.5') if shape_transform else Transform3D()
      
-    train_dataset = DataClass(split='train', transform=train_transform, download=download, as_rgb=as_rgb, size=size)
-    train_dataset_at_eval = DataClass(split='train', transform=eval_transform, download=download, as_rgb=as_rgb, size=size)
-    val_dataset = DataClass(split='val', transform=eval_transform, download=download, as_rgb=as_rgb, size=size)
-    test_dataset = DataClass(split='test', transform=eval_transform, download=download, as_rgb=as_rgb, size=size)
+    train_dataset = DataClass(split='train', transform=train_transform, download=download, as_rgb=as_rgb, size=size, root="/scratch/ljwoods2/medmnist/data")
+    train_dataset_at_eval = DataClass(split='train', transform=eval_transform, download=download, as_rgb=as_rgb, size=size, root="/scratch/ljwoods2/medmnist/data")
+    val_dataset = DataClass(split='val', transform=eval_transform, download=download, as_rgb=as_rgb, size=size, root="/scratch/ljwoods2/medmnist/data")
+    test_dataset = DataClass(split='test', transform=eval_transform, download=download, as_rgb=as_rgb, size=size, root="/scratch/ljwoods2/medmnist/data")
 
     
     train_loader = data.DataLoader(dataset=train_dataset,
@@ -93,9 +93,9 @@ def main(data_flag, output_root, num_epochs, gpu_ids, batch_size, size, conv, pr
     
     model = model.to(device)
 
-    train_evaluator = medmnist.Evaluator(data_flag, 'train', size=size)
-    val_evaluator = medmnist.Evaluator(data_flag, 'val', size=size)
-    test_evaluator = medmnist.Evaluator(data_flag, 'test', size=size)
+    train_evaluator = medmnist.Evaluator(data_flag, 'train', size=size, root="/scratch/ljwoods2/medmnist/data")
+    val_evaluator = medmnist.Evaluator(data_flag, 'val', size=size, root="/scratch/ljwoods2/medmnist/data")
+    test_evaluator = medmnist.Evaluator(data_flag, 'test', size=size, root="/scratch/ljwoods2/medmnist/data")
 
     criterion = nn.CrossEntropyLoss()
 

@@ -59,9 +59,9 @@ def main(data_flag, output_root, num_epochs, gpu_ids, batch_size, size, download
             [transforms.ToTensor(),
             transforms.Normalize(mean=[.5], std=[.5])])
      
-    train_dataset = DataClass(split='train', transform=data_transform, download=download, as_rgb=as_rgb, size=size)
-    val_dataset = DataClass(split='val', transform=data_transform, download=download, as_rgb=as_rgb, size=size)
-    test_dataset = DataClass(split='test', transform=data_transform, download=download, as_rgb=as_rgb, size=size)
+    train_dataset = DataClass(split='train', transform=data_transform, download=download, as_rgb=as_rgb, size=size, root="/scratch/ljwoods2/medmnist/data")
+    val_dataset = DataClass(split='val', transform=data_transform, download=download, as_rgb=as_rgb, size=size, root="/scratch/ljwoods2/medmnist/data")
+    test_dataset = DataClass(split='test', transform=data_transform, download=download, as_rgb=as_rgb, size=size, root="/scratch/ljwoods2/medmnist/data")
 
     
     train_loader = data.DataLoader(dataset=train_dataset,
@@ -89,9 +89,9 @@ def main(data_flag, output_root, num_epochs, gpu_ids, batch_size, size, download
 
     model = model.to(device)
 
-    train_evaluator = medmnist.Evaluator(data_flag, 'train', size=size)
-    val_evaluator = medmnist.Evaluator(data_flag, 'val', size=size)
-    test_evaluator = medmnist.Evaluator(data_flag, 'test', size=size)
+    train_evaluator = medmnist.Evaluator(data_flag, 'train', size=size, root="/scratch/ljwoods2/medmnist/data")
+    val_evaluator = medmnist.Evaluator(data_flag, 'val', size=size, root="/scratch/ljwoods2/medmnist/data")
+    test_evaluator = medmnist.Evaluator(data_flag, 'test', size=size, root="/scratch/ljwoods2/medmnist/data")
 
     if task == "multi-label, binary-class":
         criterion = nn.BCEWithLogitsLoss()
